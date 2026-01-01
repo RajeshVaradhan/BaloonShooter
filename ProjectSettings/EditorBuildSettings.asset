@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/BalloonShooter/Scenes/BalloonShooter.unity
+    guid: 8e473d69cfd821849b1ffa3976fd736e
   m_configObjects: {}

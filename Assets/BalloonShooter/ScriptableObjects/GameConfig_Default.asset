@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b287f7798b4d8e9e9c6e1b8c37a7ab, type: 3}
+  m_Name: GameConfig_Default
+  m_EditorClassIdentifier: 
+  gameDurationSeconds: 20
+  maxAliveBalloons: 24
+  spawnDistanceRange: {x: 10, y: 28}
+  spawnHeightRange: {x: 1.5, y: 5}
+  spawnHorizontalHalfWidth: 8.5
+  despawnHeight: 9.5
+  spawnRateOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.45
+      value: 1.55
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 2.4
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  windChangeIntervalSeconds: 2.4
+  windStrength: 0.75
+  comboWindowSeconds: 1.25
+  comboMultiplierStep: 0.15
+  comboMultiplierMax: 3
+  missComboPenalty: 999
+  balloonTypes:
+  - {fileID: 11400000, guid: 29fb428ac7ac2524ab1da87afe3e496a, type: 2}
+  - {fileID: 11400000, guid: 2a635cc8a9e16b547a6cb925fb4e2e72, type: 2}
+  - {fileID: 11400000, guid: ba616c4de4d303649b85cf29ef7b3e33, type: 2}
+  - {fileID: 11400000, guid: 7750bf99017c0bb4a895f18aa9928064, type: 2}
+  - {fileID: 11400000, guid: 4d601ad017c91b441800400e859f248d, type: 2}
+  - {fileID: 11400000, guid: c7067d6d296aaf546a9f4a78179dfee3, type: 2}
+  enableBalloonDashing: 1
+  dashTargetRange: 4.5
+  dashSpeed: 4
+  dashDurationSeconds: 0.2
+  dashIntervalSecondsRange: {x: 1.25, y: 2.5}
