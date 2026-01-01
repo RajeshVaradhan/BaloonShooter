@@ -420,7 +420,13 @@ namespace BalloonShooter.Editor
             var endGroup = endPanelGo.GetComponent<CanvasGroup>();
             if (endGroup == null) endGroup = endPanelGo.AddComponent<CanvasGroup>();
 
-            TMP_Text endText = EnsureText(endPanelGo.transform, "EndSummaryText", new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 0f), 64, TextAlignmentOptions.Center);
+            TMP_Text endText = EnsureText(endPanelGo.transform, "EndSummaryText", new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 120f), 64, TextAlignmentOptions.Center);
+            endText.rectTransform.sizeDelta = new Vector2(1400f, 420f);
+
+            Button restartButton = EnsureButton(endPanelGo.transform, "RestartButton", new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, -150f), new Vector2(420f, 110f));
+            TMP_Text restartLabel = EnsureText(restartButton.transform, "Label", new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, 44, TextAlignmentOptions.Center);
+            restartLabel.text = "Restart";
+            restartLabel.color = Color.white;
 
             var so = new SerializedObject(hud);
             so.FindProperty("manager").objectReferenceValue = manager;
@@ -432,6 +438,7 @@ namespace BalloonShooter.Editor
             so.FindProperty("accuracyText").objectReferenceValue = accuracyText;
             so.FindProperty("endPanel").objectReferenceValue = endGroup;
             so.FindProperty("endSummaryText").objectReferenceValue = endText;
+            so.FindProperty("restartButton").objectReferenceValue = restartButton;
             so.ApplyModifiedPropertiesWithoutUndo();
 
             return hud;
@@ -462,6 +469,39 @@ namespace BalloonShooter.Editor
                 text.text = name;
 
             return text;
+        }
+
+        private static Button EnsureButton(Transform parent, string name, Vector2 anchorMin, Vector2 anchorMax, Vector2 anchoredPos, Vector2 size)
+        {
+            Transform existing = parent.Find(name);
+            GameObject go = existing != null ? existing.gameObject : new GameObject(name);
+            go.transform.SetParent(parent, false);
+
+            var rect = go.GetComponent<RectTransform>();
+            if (rect == null) rect = go.AddComponent<RectTransform>();
+            rect.anchorMin = anchorMin;
+            rect.anchorMax = anchorMax;
+            rect.pivot = anchorMin == anchorMax ? anchorMin : new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = anchoredPos;
+            rect.sizeDelta = size;
+
+            var img = go.GetComponent<Image>();
+            if (img == null) img = go.AddComponent<Image>();
+            img.color = new Color(0.18f, 0.18f, 0.18f, 0.95f);
+
+            var button = go.GetComponent<Button>();
+            if (button == null) button = go.AddComponent<Button>();
+            var colors = button.colors;
+            colors.normalColor = new Color(0.18f, 0.18f, 0.18f, 0.95f);
+            colors.highlightedColor = new Color(0.28f, 0.28f, 0.28f, 1f);
+            colors.pressedColor = new Color(0.12f, 0.12f, 0.12f, 1f);
+            colors.selectedColor = colors.highlightedColor;
+            colors.disabledColor = new Color(0.18f, 0.18f, 0.18f, 0.35f);
+            colors.colorMultiplier = 1f;
+            colors.fadeDuration = 0.05f;
+            button.colors = colors;
+
+            return button;
         }
 
         private static void Apply4kCanvasScalerDefaults(CanvasScaler scaler)

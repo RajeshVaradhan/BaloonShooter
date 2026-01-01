@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace BalloonShooter
 {
@@ -21,6 +23,7 @@ namespace BalloonShooter
         [Header("End Panel")]
         [SerializeField] private CanvasGroup endPanel;
         [SerializeField] private TMP_Text endSummaryText;
+        [SerializeField] private Button restartButton;
 
         private void Awake()
         {
@@ -34,6 +37,12 @@ namespace BalloonShooter
             }
 
             ApplyEndPanel(visible: false);
+
+            if (restartButton != null)
+            {
+                restartButton.onClick.RemoveListener(RestartRound);
+                restartButton.onClick.AddListener(RestartRound);
+            }
         }
 
         private void Update()
@@ -41,7 +50,7 @@ namespace BalloonShooter
             if (manager == null || score == null) return;
 
             if (crosshairRect != null)
-                crosshairRect.position = Input.mousePosition;
+                crosshairRect.position = GetPointerScreenPosition();
 
             if (scoreText != null) scoreText.text = $"Score: {score.Score}";
             if (highScoreText != null) highScoreText.text = $"High: {score.HighScore}";
@@ -62,7 +71,7 @@ namespace BalloonShooter
             if (showEnd && endSummaryText != null)
             {
                 endSummaryText.text =
-                    $"Round Over\n\nScore: {score.Score}\nHigh Score: {score.HighScore}\nAccuracy: {score.Accuracy01 * 100f:0}%\nBest Combo: {score.BestCombo}\n\nPress R to Restart";
+                    $"Round Over\n\nScore: {score.Score}\nHigh Score: {score.HighScore}\nAccuracy: {score.Accuracy01 * 100f:0}%\nBest Combo: {score.BestCombo}";
             }
         }
 
@@ -72,6 +81,22 @@ namespace BalloonShooter
             endPanel.alpha = visible ? 1f : 0f;
             endPanel.interactable = visible;
             endPanel.blocksRaycasts = visible;
+
+            if (restartButton != null)
+                restartButton.gameObject.SetActive(visible);
+        }
+
+        private static Vector3 GetPointerScreenPosition()
+        {
+            if (Input.touchCount > 0)
+                return Input.GetTouch(0).position;
+
+            return Input.mousePosition;
+        }
+
+        private void RestartRound()
+        {
+            manager?.StartNewRound();
         }
     }
 }
